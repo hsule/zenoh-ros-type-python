@@ -102,6 +102,7 @@ class Gear(IdlStruct, typename='Gear'):
     status: uint8
 
 
+@dataclass
 class TurnIndicators(IdlStruct, typename='TurnIndicators'):
     class STATUS(Enum):
         UNKNOWN = 0
@@ -112,6 +113,7 @@ class TurnIndicators(IdlStruct, typename='TurnIndicators'):
     status: uint8
 
 
+@dataclass
 class HazardLights(IdlStruct, typename='HazardLights'):
     class STATUS(Enum):
         UNKNOWN = 0
@@ -121,6 +123,7 @@ class HazardLights(IdlStruct, typename='HazardLights'):
     status: uint8
 
 
+@dataclass
 class VehicleStatus(IdlStruct, typename='VehicleStatus'):
     stamp: Time
     gear: Gear
