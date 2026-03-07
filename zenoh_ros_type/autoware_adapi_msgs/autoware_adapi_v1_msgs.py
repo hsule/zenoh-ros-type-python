@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 
 from pycdr2 import Enum, IdlStruct
-from pycdr2.types import int64, sequence, uint16
+from pycdr2.types import float64, int64, sequence, uint8, uint16
 
 from ..common_interfaces.geometry_msgs import AccelWithCovarianceStamped, Pose, PoseWithCovarianceStamped, TwistWithCovarianceStamped
 from ..common_interfaces.std_msgs import Header
 from ..geographic_info.geographic_msgs import GeoPointStamped
+from ..rcl_interfaces import Time
 
 
 @dataclass
@@ -38,7 +39,6 @@ class ResponseStatus(IdlStruct, typename='ResponseStatus'):
 @dataclass
 class ChangeOperationModeResponse(IdlStruct, typename='ChangeOperationModeResponse'):
     status: ResponseStatus
-
 
 @dataclass
 class RoutePrimitive(IdlStruct, typename='RoutePrimitive'):
@@ -86,3 +86,46 @@ class SetRoutePointsResponse(IdlStruct, typename='SetRoutePointsResponse'):
 @dataclass
 class ClearRouteResponse(IdlStruct, typename='ClearRouteResponse'):
     status: ResponseStatus
+
+
+@dataclass
+class Gear(IdlStruct, typename='Gear'):
+    class STATUS(Enum):
+        UNKNOWN = 0
+        NEUTRAL = 1
+        DRIVE = 2
+        REVERSE = 3
+        PARK = 4
+        LOW = 5
+
+    status: uint8
+
+
+@dataclass
+class TurnIndicators(IdlStruct, typename='TurnIndicators'):
+    class STATUS(Enum):
+        UNKNOWN = 0
+        DISABLE = 1
+        LEFT = 2
+        RIGHT = 3
+
+    status: uint8
+
+
+@dataclass
+class HazardLights(IdlStruct, typename='HazardLights'):
+    class STATUS(Enum):
+        UNKNOWN = 0
+        DISABLE = 1
+        ENABLE = 2
+
+    status: uint8
+
+
+@dataclass
+class VehicleStatus(IdlStruct, typename='VehicleStatus'):
+    stamp: Time
+    gear: Gear
+    turn_indicators: TurnIndicators
+    hazard_lights: HazardLights
+    steering_tire_angle: float64
